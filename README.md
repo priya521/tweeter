@@ -17,10 +17,10 @@ This repository is the starter code for the project: Students will fork and clon
 - Node 5.10.x or above
 
 
-!["screenshot for TweetPage"] (https://github.com/priya521/tweeter/blob/master/docs/TweeterPage.png)
+!["screenshot for TweetPage"](https://github.com/priya521/tweeter/blob/master/docs/TweeterPage.png)
 
-!["screenshot for TweetPageError"] (https://github.com/priya521/tweeter/blob/master/docs/Tweet%20with%20Error%20Msg.png)
+!["screenshot for TweetPageError"](https://github.com/priya521/tweeter/blob/master/docs/Tweet%20with%20Error%20Msg.png)
 
-!["screenshot for TweetPage empty"] (https://github.com/priya521/tweeter/blob/master/docs/EmptyTweet.png)
+!["screenshot for TweetPage empty"](https://github.com/priya521/tweeter/blob/master/docs/EmptyTweet.png)
 
 
