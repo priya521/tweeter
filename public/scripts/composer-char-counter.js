@@ -9,7 +9,7 @@ $(document).ready(function() {
     if (textLength < 0) {
       $(counter).addClass("red-font");
     } else {
-      $(counter).removeClass("red-font");
+      $(counter).removeClass("red-font")
     }
 
   })
