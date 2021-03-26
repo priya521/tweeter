@@ -3,38 +3,108 @@
  * https://css-tricks.com/international-box-sizing-awareness-day/
  * Do not modify these two selectors, please
  */
-html {
+ html {
   box-sizing: border-box;
 }
 *, *:before, *:after {
   box-sizing: inherit;
 }
 
+i {
+  font-style: normal;
+}
 /*
  * Global layout stuff
  */
 
 body {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
+  font-family: "Source Sans Pro", sans-serif;
   color: #545149;
   background-color: #f4f1ec;
   font-size: 24px;
-  font-family: 'Source Sans Pro', sans-serif;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 10%;
 }
 
-
-/*
- * Additional CSS can be defined below or in other CSS files, as per instructions
- */
-
-
- main {
-  width: 90%;
+.main-header-and-body {
   display: flex;
-  justify-content: center;
-  align-content: center;
   flex-direction: column;
+  margin-top: 120px;
+  width:100%;
+  }
+.taskbar-header {
+  width: 100%;
+}
+.tweet-header {
+  width: 100%;
+}
+
+.tweet-main {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+
+.avatar {
+  padding-top: 1em;
+}
+
+h2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+#write-a-new-tweet {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  font-family: 'Bungee';
+  font-size: medium;
+  padding-top: 1em;
+  color: aliceblue;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  background-color: #f4f1ec;
+  align-items: center;
+}
+
+#content-error {
+  border: 1px solid red;
+  color: #D8000C;
+  background-color: #FFD2D2;
+  padding: 1rem;
+  margin: 1rem;
+  display: none;
+}
+
+#length-error {
+  border: 1px solid red;
+  color: #D8000C;
+  background-color: #FFD2D2;
+  padding: 1rem;
+  margin: 1rem;
+  display: none;
+}
+main {
+  width: 90%
+}
+@media (min-width: 1024px) {
+  .main-header-and-body {
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 155px;
+
+  }
+  .taskbar-header {
+    width: 40%;
+  }
+  .container {
+    width: 40%;
+  }
 }
