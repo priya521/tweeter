@@ -6,6 +6,8 @@
 
     <!-- External CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Source+Sans+Pro:ital,wght@1,300&display=swap" rel="stylesheet">
@@ -15,45 +17,48 @@
     <link rel="stylesheet" href="/styles/nav.css" type="text/css" />
     <link rel="stylesheet" href="/styles/header.css" type="text/css" />
     <link rel="stylesheet" href="/styles/new-tweet.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/tweetBox.css" type="text/css" />
 
     
   </head>
 
   <body>
     <!-- Top nav bar (fixed) -->
-    <nav>
-      <span id="logo">tweeter</span>
-      <div class="writeNavPrompt">
-        <h5>Write <span id="navNewTweet">a new tweet</span> </h5>
-        <span>🔻</span>
-      </div>
+    <nav class="navbar">
+      <span>Tweeter</span>
+      <div class="lower-header">
+      <label for="tweet-text" id="write-a-new-tweet">Write a new tweet</label>
+      <br/>
+      <span class="chevron">🔻</span>
+    </div>
     </nav>
-    <header id="profileHeader">
-      <div>
+    <div class="main-header-and-body">
+    <header class="taskbar-header">
+      <div class="avatar"> 
           <img src="/images/profile-hex.png"> 
       </div>
       <br>
       <div>
-          <h2>Your Name</h2>
+          <h2 class="user-name">Priyanka</h2>
       </div>
-  </header>
-
-    <!-- Page-specific (main) content here -->
+    </header>
     <main class="container">
       <section class="new-tweet">
-        <h2>Compose Tweet</h2>
-         <form class="form-inline newTweetForm" id="newTweetSubmission" action="/tweets" method="POST"></form>
-          <label for="tweet-text">What are you humming about?</label>
+        <div class="hide" id="length-error">Too long characters in tweet.</div>
+        <div class="hide" id="content-error">Cannot post empty tweet.Please give some characters</div>
+        <label for="tweet-text">What are you humming about?</label>
+        <form class="form-inline" action="/tweets" method="POST">
           <textarea name="text" id="tweet-text"></textarea>
-          <div>
+          <div class="lower-form">
             <button type="submit">Tweet</button>
-            <output name="counter" class="counter" for="tweet-text">140</output>
+            <output name="counter" id="tweet-counter" class="counter" for="tweet-text">140</output>
           </div>
         </form>
-      </section>
+      </section> 
       <section id="tweets-container">
       </section>
     </main>
+    </div>
 
 <!-- External JS -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -61,6 +66,7 @@
 <!-- App JS -->
 <script type="text/javascript" src="/scripts/client.js"></script>
 <script type="text/javascript" src="/scripts/composer-char-counter.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 
   </body>
