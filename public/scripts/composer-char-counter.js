@@ -1,21 +1,13 @@
-$(document).ready(function() {
-  $("#tweet-text").on('input', function() {
-    let textLength = 140 - this.value.length;
-
-    let counter = $(this).parent().find(".counter")[0]
-    
-    counter.innerHTML = textLength;
-
-    if (textLength < 0) {
-      $(counter).addClass("red-font");
-    } else {
-      $(counter).removeClass("red-font")
-    }
-
-  })
+//function controls counter behaviour upon entry of text into tweet-text box
+$(document).ready(function () {
+  $("#tweet-text").on('keyup', function () {
+    const numOfCharacters = $("#tweet-text").val().length;
+    console.log(numOfCharacters);
+    const max = 140;
+    const remainingChar = max - numOfCharacters;
+    const remainingElem = $("#tweet-counter").text(remainingChar);
+    remainingElem.toggleClass("red-font", (remainingChar < 0));
+  });
 });
-
-
-
 
 
