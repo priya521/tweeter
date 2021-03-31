@@ -16,7 +16,6 @@
   flex-direction: column;
   width:100%;
   padding: 1em;
-  /* padding: 0 10em 10em 10em */
 }
 
 .new-tweet #tweet-text {
