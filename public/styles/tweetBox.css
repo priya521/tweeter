@@ -1,6 +1,5 @@
-
-user-name{
-  background-color: rgb(134 0 216);
+.user-name{
+  background-color: transparent;
   display: flex;
   flex-direction: row;
   align-items: center;
