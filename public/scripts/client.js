@@ -1,35 +1,38 @@
-/*
- * Client-side JS logic goes here
- * jQuery is already loaded
- * Reminder: Use (and do all your DOM work in) jQuery's document ready function
- */
 
-
-
-
-//escapes a string to prevent XSS attacks.
-const escape = function (str) {
-  let div = document.createElement('div');
+const escape =  function(str) {
+  let div = document.createElement("div");
   div.appendChild(document.createTextNode(str));
   return div.innerHTML;
-}
+};
 
-
-
-//renderTweets will be called in loadTweets to display all stored tweets in the app body.
-$(document).ready(function () {
+// Renders all tweets onto homepage
 const renderTweets = function(tweets) {
-for (let tweet of tweets) {
-  const $tweet = createTweetElement(tweet);
-  $('#tweets-container').append($tweet);
-}
-}
+  for (let tweet of tweets) {
+    const tweetAppended = createTweetElement(tweet);
+    $('.tweet-feed').prepend(tweetAppended);
+  }
+};
 
+// Timestamp of when the tweet was created
+const timeStamp = function(date) {
+  let timeElapsedinSeconds = (Date.now() - date) / 1000;
+  let minutesPassed = Math.floor(timeElapsedinSeconds /  (60));
+  let hoursPassed = Math.floor(minutesPassed /  (60));
+  let daysPassed = Math.floor(hoursPassed /  (24));
 
-
-//This function creates the body of the app, with all posted tweets taking this format.
-const createTweetElement = function(tweet) { 
-let $tweet = `<article class="tweet-article"> 
+  if (daysPassed > 1) {
+    return daysPassed + " days ago";
+  }
+  if (hoursPassed > 1) {
+    return hoursPassed + " hours ago";
+  } else {
+    return minutesPassed + " minutes ago";
+  }
+};
+/// New tweet html structure
+const createTweetElement = function(tweet) {
+  const $tweet = `
+    <article class="tweet-article">
     <header class="tweet-main">
     <figure class="tweet-avatar-container">
       <img class="tweetAvatar" src="${tweet.user.avatars}" alt="this is your avatar">
@@ -42,7 +45,7 @@ let $tweet = `<article class="tweet-article">
 </span>
     <div class="tweet-details">
       <div class="tweet-age">
-        <h6>${moment(tweet.created_at).fromNow()}</h6>
+        <h6>${timeStamp(tweet.created_at)}</h6>
       </div>
       <div class="emoji-footers">
       <a href="#"><i class="fa fa-flag"></i></a>
@@ -54,40 +57,84 @@ let $tweet = `<article class="tweet-article">
   return $tweet;
 }
 
+$(document).ready(function() {
+  $(".error-slide").hide();
+  const loadTweets = function() {
+    $.ajax({
+      url: "/tweets",
+      method: "GET"
+    }).then(result => {
+      renderTweets(result);
+    }).catch(err => {
+      console.log("ajax error caught");
+    });
+  };
+  loadTweets();
 
-const loadTweets = function () {
-  console.log("loading posts");
-  $.ajax({ url: "/tweets" })
-    .then((res) => {
-      renderTweets(res);
+  // Events after tweet submission
+  $("form").on("submit", function(event) {
+    event.preventDefault();
+    $("#content-error").slideUp('fast');
+    $("#length-error").slideUp('fast');
+    //when the counter is 140 characters when the button is clicked, we slide down an error showing that there is no text in the tweet box.
+    if ($(".counter").val() == 140) {
+      $("#content-error").slideDown('slow');
+      
+    }else if ($(".counter").val() < 0) {
+      $("#length-error").slideDown('slow');
+      $(".counter").toggleClass('red-font');
+      return;
+    }
+  
+    // Loads new tweet onto the page after posting
+    const serializeData = $(this).serialize();
+    $.ajax({
+      url: "/tweets",
+      method: "POST",
+      data: serializeData
     })
-}
-loadTweets();
-$("form").on('submit', function (event) {
-  //prevents button from redirecting page
-  event.preventDefault();
-  //in the event of errors, this slides up the error messages when the submit button is pressed again.
-  $("#content-error").slideUp('fast');
-  $("#length-error").slideUp('fast');
-  //when the counter is 140 characters when the button is clicked, we slide down an error showing that there is no text in the tweet box.
-  if ($(".counter").val() == 140) {
-    $("#content-error").slideDown('slow');
-    //if the counter is less than 0, we slide down an error that tells the user they are past the limit for text, and set the counter to red.
-  } else if ($(".counter").val() < 0) {
-    $("#length-error").slideDown('slow');
-    $(".counter").toggleClass('red-font');
-    //For a successful button press. Serializes the ajax requests POST; asynchronously returns the loadTweets function with the new tweet content. Slides up any displayed error messages.
-  } else {
-    console.log("serialize", $(this).serialize());
-    $.ajax({ url: '/tweets', method: 'POST', data: $(this).serialize() })
-      .then((res) => {
-        $("#content-error").slideUp('fast');
-        $("#length-error").slideUp('fast');
-        $("#tweet-text").val("");
-        $("#tweet-counter").val(140);
-        return loadTweets();
-      })
-  }
-});
+      .then(() => {
+        $.ajax({
+          url: "/tweets",
+          method: "GET"
+        })
+          .then((data) => {
+            $("#content-error").slideUp('fast');
+            $("#length-error").slideUp('fast');
+            $("#tweet-counter").val(140);
+            $("#tweet-text").val("");
+            const $newTweet = createTweetElement(data[data.length - 1]);
+            $(".tweet-feed").prepend($newTweet);
+          } )
+          .catch(err => {
+            console.log("ajax error caught");
+          });
+      });
+    
+  });
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
